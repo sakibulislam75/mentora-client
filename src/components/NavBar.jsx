@@ -71,7 +71,7 @@ export function MainNavbar() {
                      >
                         Login
                      </Link>
-                     <Link href="/register">
+                     <Link href="/RegisterPage">
                         <Button
                            color="primary"
                            className="font-bold rounded-full px-8 shadow-lg shadow-blue-600/20"
