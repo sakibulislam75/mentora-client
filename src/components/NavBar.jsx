@@ -66,7 +66,7 @@ export function MainNavbar() {
                <div className="hidden md:flex items-center gap-4">
                   <>
                      <Link
-                        href="/login"
+                        href="/LoginPage"
                         className="font-medium text-slate-700 hover:text-blue-600 transition-colors"
                      >
                         Login
