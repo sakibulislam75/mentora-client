@@ -3,8 +3,28 @@
 import { Button, Input } from '@heroui/react';
 import Link from 'next/link';
 import { User, Mail, Lock, ArrowRight } from 'lucide-react';
+import { authClient } from '@/lib/auth-client';
 
 export default function Register() {
+   const onSubmit = async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.currentTarget);
+      const userData = Object.fromEntries(formData.entries());
+
+      const { data, error } = await authClient.signUp.email({
+         name: userData.name, // required
+         email: userData.email, // required
+         username: userData.image, // required
+         password: userData.password, // required
+         callbackURL: '/',
+      });
+      if (error) {
+         console.log('error:' + error.message);
+      } else {
+         console.log(data);
+      }
+      console.log(userData);
+   };
    return (
       <div className="min-h-[80vh] flex flex-col bg-slate-50 py-12">
          <div className="grow flex items-center justify-center p-4">
@@ -22,7 +42,7 @@ export default function Register() {
                      </p>
                   </div>
 
-                  <form className="space-y-6">
+                  <form onSubmit={onSubmit} className="space-y-6">
                      {/* Full Name */}
                      <div className="space-y-2">
                         <label htmlFor="name" className="text-sm font-bold text-slate-700 ml-1">

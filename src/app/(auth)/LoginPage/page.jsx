@@ -1,14 +1,29 @@
 'use client';
 
 import { Button, Input } from '@heroui/react';
-
 import Link from 'next/link';
-
 import { Mail, Lock, ArrowRight } from 'lucide-react';
-
 import Image from 'next/image';
+import { authClient } from '@/lib/auth-client';
 
 export default function Login() {
+   const onSubmit = async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.currentTarget);
+      const userData = Object.fromEntries(formData.entries());
+
+      const { data, error } = await authClient.signIn.email({
+         email: userData.email, // required
+         password: userData.password, // required
+         rememberMe: true,
+         callbackURL: '/',
+      });
+      if (error) {
+         alert(error.message);
+      } else {
+         alert('Login successful');
+      }
+   };
    return (
       <div className="min-h-[80vh] flex flex-col bg-slate-50">
          <div className="flex items-center justify-center p-4">
@@ -55,7 +70,7 @@ export default function Login() {
                      </div>
                   </div>
 
-                  <form className="space-y-6">
+                  <form onSubmit={onSubmit} className="space-y-6">
                      {/* Email */}
                      <div className="space-y-2">
                         <label htmlFor="email" className="text-sm font-bold text-slate-700 ml-1">
