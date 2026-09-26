@@ -113,12 +113,12 @@ export function MainNavbar() {
                   ) : (
                      <>
                         <Link
-                           href="/LoginPage"
+                           href="/login"
                            className="font-medium text-slate-700 hover:text-blue-600 transition-colors"
                         >
                            Login
                         </Link>
-                        <Link href="/RegisterPage">
+                        <Link href="/register">
                            <Button
                               color="primary"
                               className="font-bold rounded-full px-8 shadow-lg shadow-blue-600/20"
