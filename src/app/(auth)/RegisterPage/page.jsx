@@ -4,8 +4,10 @@ import { Button, Input } from '@heroui/react';
 import Link from 'next/link';
 import { User, Mail, Lock, ArrowRight } from 'lucide-react';
 import { authClient } from '@/lib/auth-client';
+import { useRouter } from 'next/navigation';
 
 export default function Register() {
+   const router = useRouter();
    const onSubmit = async (e) => {
       e.preventDefault();
       const formData = new FormData(e.currentTarget);
@@ -14,14 +16,16 @@ export default function Register() {
       const { data, error } = await authClient.signUp.email({
          name: userData.name, // required
          email: userData.email, // required
-         username: userData.image, // required
-         password: userData.password, // required
-         callbackURL: '/',
+         image: userData.image || undefined, // required
+         password: userData.password,
+         autoSignIn: false, // required
       });
       if (error) {
-         console.log('error:' + error.message);
+         alert(error.message);
       } else {
-         console.log(data);
+         await authClient.signOut(); //protect auto login
+         alert('Registration successful. Please sign in.');
+         router.push('/LoginPage');
       }
       console.log(userData);
    };
